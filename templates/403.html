@@ -1,0 +1,55 @@
+
+{% include "header.html" %}
+
+<!-- Page Header-->
+<header
+  class="masthead"
+  style="background-image: url('../static/assets/img/error.jpg')"
+>
+  <div class="container position-relative px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+      <div class="col-md-10 col-lg-8 col-xl-7">
+        <div class="site-heading">
+          <h1>403 Forbidden</h1>
+          <span class="subheading">Access to this resource is denied.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<!-- Main Content-->
+<div class="container px-4 px-lg-5">
+  <div class="row gx-4 gx-lg-5 justify-content-center">
+    <div class="col-md-10 col-lg-8 col-xl-7">
+      <!-- Error content-->
+      <div class="post-preview text-center">
+        <h2 class="post-title">You don't have permission to access this page</h2>
+        <p class="post-subtitle">
+          The server understood your request but is refusing to fulfill it.
+        </p>
+        <div class="my-5">
+          <i class="fas fa-lock fa-5x text-muted"></i>
+        </div>
+        <p class="post-meta">
+          Possible reasons:
+          <ul class="list-unstyled">
+            <li>Your account doesn't have sufficient privileges</li>
+            <li>The resource is protected</li>
+          </ul>
+        </p>
+      </div>
+      <!-- Divider-->
+      <hr class="my-4" />
+
+      <!-- Navigation links -->
+      <div class="d-flex justify-content-between mb-4">
+        <a class="btn btn-primary" href="{{url_for('get_all_posts')}}">← Back to Home</a>
+        {% if not current_user.is_authenticated: %}
+        <a class="btn btn-secondary" href="{{url_for('login')}}">Login</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% include "footer.html" %}
