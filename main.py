@@ -1,5 +1,5 @@
 from datetime import date
-from flask import Flask, abort, render_template, redirect, url_for, flash
+from flask import Flask, abort, render_template, redirect, url_for, flash, request
 from flask_bootstrap import Bootstrap5
 from flask_ckeditor import CKEditor
 from flask_gravatar import Gravatar
@@ -9,8 +9,16 @@ from sqlalchemy.orm import relationship, DeclarativeBase, Mapped, mapped_column
 from sqlalchemy import Integer, String, Text
 from functools import wraps
 from werkzeug.security import generate_password_hash, check_password_hash
+import smtplib
+from dotenv import load_dotenv
+import os
 # Import your forms from the forms.py
 from forms import CreatePostForm, RegistrationForm, LoginForm, CommentForm
+
+# Load environmental variables
+load_dotenv()
+email_id = os.getenv("EMAIL_ID")
+password = os.getenv("PASSWORD")
 
 
 app = Flask(__name__)
@@ -318,9 +326,27 @@ def about():
     return render_template("about.html")
 
 
-@app.route("/contact")
+@app.route("/contact", methods=["GET", "POST"])
 def contact():
-    return render_template("contact.html")
+    if request.method == 'POST':
+        data = request.form
+        name = data['name']
+        email = data['email']
+        phone = data['phone']
+        message = data['message']
+        mail_message = f"Subject:Bamboo Blogs: New Message from {name}\n\nName: {name}\nEmail: {email}\nPhone: {phone}\nMessage:{message}"
+        if not current_user.is_authenticated:
+            flash("You need to login or register to send a message.")
+            return redirect(url_for("login"))
+
+        # Send mail
+        with smtplib.SMTP("smtp.gmail.com") as connection:
+            connection.starttls()
+            connection.login(email_id, password)
+            connection.sendmail(from_addr=email_id, to_addrs="elayabarathiedison@gmail.com", msg=mail_message)
+
+        return render_template('contact.html', tit="Successfully sent your message")
+    return render_template('contact.html', tit="Let’s Connect!")
 
 
 if __name__ == "__main__":
