@@ -2,6 +2,7 @@ services:
   - type: web
     name: bamboo-blogs
     env: python
+    python:
+      version: 3.11.9
     buildCommand: "pip install -r requirements.txt"
     startCommand: "gunicorn main:app"
-    pythonVersion: 3.11.9
