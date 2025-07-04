@@ -20,6 +20,8 @@ load_dotenv()
 email_id = os.getenv("EMAIL_ID")
 password = os.getenv("PASSWORD")
 flask_secret_key = os.getenv("FLASK_SECRET_KEY")
+database_url = os.getenv("DATABASE_URL")
+
 
 
 
@@ -52,7 +54,7 @@ gravatar = Gravatar(app,
 # CREATE DATABASE
 class Base(DeclarativeBase):
     pass
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///bamboo-blogs.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = database_url
 db = SQLAlchemy(model_class=Base)
 db.init_app(app)
 
