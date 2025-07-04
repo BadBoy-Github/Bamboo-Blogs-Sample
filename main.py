@@ -19,10 +19,12 @@ from forms import CreatePostForm, RegistrationForm, LoginForm, CommentForm
 load_dotenv()
 email_id = os.getenv("EMAIL_ID")
 password = os.getenv("PASSWORD")
+flask_secret_key = os.getenv("FLASK_SECRET_KEY")
+
 
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
+app.config['SECRET_KEY'] = flask_secret_key
 ckeditor = CKEditor(app)
 Bootstrap5(app)
 
@@ -350,4 +352,4 @@ def contact():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)
