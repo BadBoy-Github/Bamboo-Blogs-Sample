@@ -12,6 +12,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import smtplib
 from dotenv import load_dotenv
 import os
+
 # Import your forms from the forms.py
 from forms import CreatePostForm, RegistrationForm, LoginForm, CommentForm
 
@@ -21,9 +22,6 @@ email_id = os.getenv("EMAIL_ID")
 password = os.getenv("PASSWORD")
 flask_secret_key = os.getenv("FLASK_SECRET_KEY")
 database_url = os.getenv("DATABASE_URL")
-
-
-
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = flask_secret_key
@@ -48,7 +46,6 @@ gravatar = Gravatar(app,
                     use_ssl=False,
                     base_url=None
                     )
-
 
 
 # CREATE DATABASE
